@@ -5,8 +5,16 @@ module ActiveAdmin
       class Form < Base
 
         def title
-          I18n.t("active_admin.#{params[:action]}_model",
-                 :model => active_admin_config.resource_label)
+          if config[:title].is_a? String
+            config[:title]
+          else
+            I18n.t("active_admin.#{params[:action]}_model",
+                   :model => active_admin_config.resource_label)
+          end
+        end
+
+        def config
+          form_presenter.options
         end
 
         def form_presenter
